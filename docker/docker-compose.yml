@@ -1,0 +1,43 @@
+services:
+  # DATABASE (MySQL)
+  mysql:
+    build:
+      context: ../db
+      dockerfile: Dockerfile
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  # Adminer
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+
+  # MinIO Initially integrated for pokemon card image storage
+  # minio:
+  #   image: minio/minio
+  #   container_name: minio_storage
+  #   restart: unless-stopped
+  #   ports:
+  #     - "9000:9000"
+  #     - "9001:9001"
+  #   environment:
+  #     MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+  #     MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+  #   volumes:
+  #     - minio_data:/data
+  #   command: server /data --console-address ":9001"
+
+volumes:
+  db_data:
+  # minio_data:

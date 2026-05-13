@@ -27,12 +27,6 @@ Before starting Docker, rename the env example file to `.env`.
 From the project root:
 
 ```bash
-mv .env.example .env
-```
-
-If your file is named `.env..example`, rename it instead:
-
-```bash
 mv .env..example .env
 ```
 
